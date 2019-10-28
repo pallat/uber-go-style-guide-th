@@ -1043,14 +1043,11 @@ for _, f := range files {
 
 ### Be Consistent
 
-Some of the guidelines outlined in this document can be evaluated objectively;
-others are situational, contextual, or subjective.
+คำแนะนำบางส่วนที่ระบุในเอกสารชุดนี้ วัดผลได้จริง เว้นไว้แต่เพียง พฤติกรรม บริบท หรือหัวข้อต่างๆ
 
-Above all else, **be consistent**.
+นอกเหนือจากที่กล่าวมาก็คือ **ทำให้เป็นจังหวะเดียวกัน**
 
-Consistent code is easier to maintain, is easier to rationalize, requires less
-cognitive overhead, and is easier to migrate or update as new conventions emerge
-or classes of bugs are fixed.
+โค้ดที่ลายมือเดียวกัน มันดูแลรักษาง่าย มันง่ายที่จะเข้าใจ ไม่ทำให้เสียเวลาต้องมานั่งแกะ แล้วถ้าแก้ไขย้ายที่มันก็ยังทำได้ง่ายกว่า รวมถึงตอนแก้บั๊กด้วย
 
 Conversely, having multiple disparate or conflicting styles within a single
 codebase causes maintenance overhead, uncertainty, and cognitive dissonance,
