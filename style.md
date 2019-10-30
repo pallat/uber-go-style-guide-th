@@ -1049,18 +1049,13 @@ for _, f := range files {
 
 โค้ดที่ลายมือเดียวกัน มันดูแลรักษาง่าย มันง่ายที่จะเข้าใจ ไม่ทำให้เสียเวลาต้องมานั่งแกะ แล้วถ้าแก้ไขย้ายที่มันก็ยังทำได้ง่ายกว่า รวมถึงตอนแก้บั๊กด้วย
 
-Conversely, having multiple disparate or conflicting styles within a single
-codebase causes maintenance overhead, uncertainty, and cognitive dissonance,
-all of which can directly contribute to lower velocity, painful code reviews,
-and bugs.
+ตรงกันข้าม ถ้าเขียนมาคนละแบบ หรือสไตล์ไม่เข้ากันทั้งๆที่โค้ดชุดเดียวกัน มันจะทำให้เสียเวลาในการดูแล เปราะบาง และไม่เข้ากัน ทั้งหมดทั้งมวลนี้จะทำให้ทำงานได้ช้า รีวิวโค้ด จะเหนื่อยมาก และเต็มไปด้วยบั๊ก
 
-When applying these guidelines to a codebase, it is recommended that changes
-are made at a package (or larger) level: application at at a sub-package level
-violates the above concern by introducing multiple styles into the same code.
+เวลาจะนำเอาคำแนะนำชุดนี้ไปปรับใช้จริง แนะนำว่าให้ทำกันในระดับแพ็คเก็จ (หรือใหญ่กว่า): ถ้าทำแค่ในแพ็คเก็จย่อยๆ มันจะขัดกับสิ่งที่กล่าวมาข้างต้น เพราะมันจะมีหลายสไตล์ในโค้ดชุดเดียว
 
 ### Group Similar Declarations
 
-Go supports grouping similar declarations.
+Go สนับสนุนการจัดกลุ่มการการประกาศที่เป็นพวกเดียวกัน
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1084,7 +1079,7 @@ import (
 </td></tr>
 </tbody></table>
 
-This also applies to constants, variables, and type declarations.
+การทำแบบนี้ยังสามารถทำได้กับการประกาศ constant ตัวแปร และการประกาศ type
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1129,7 +1124,7 @@ type (
 </td></tr>
 </tbody></table>
 
-Only group related declarations. Do not group declarations that are unrelated.
+จัดกลุ่มเฉพาะสิ่งที่สัมพันธ์กัน อย่าไปทำกับอะไรที่ไม่เกี่ยวข้องกัน
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1164,8 +1159,7 @@ const ENV_VAR = "MY_ENV"
 </td></tr>
 </tbody></table>
 
-Groups are not limited in where they can be used. For example, you can use them
-inside of functions.
+การจัดกลุ่มสามารถทำในฟังก์ชั่นก็ได้ ดังแสดงในตัวอย่าง
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1201,12 +1195,12 @@ func f() string {
 
 ### Import Group Ordering
 
-There should be two import groups:
+แบ่งกลุ่มการอิมพอร์ตเป็นสองชุด:
 
 - Standard library
 - Everything else
 
-This is the grouping applied by goimports by default.
+การจัดกลุ่มนี้ goimports ทำให้โดยปกติอยู่แล้ว
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1239,33 +1233,30 @@ import (
 
 ### Package Names
 
-When naming packages, choose a name that is:
+เวลาจะประกาศชื่อแพ็คเก็จ ให้เลือกแบบนี้:
 
-- All lower-case. No capitals or underscores.
-- Does not need to be renamed using named imports at most call sites.
-- Short and succinct. Remember that the name is identified in full at every call
-  site.
-- Not plural. For example, `net/url`, not `net/urls`.
-- Not "common", "util", "shared", or "lib". These are bad, uninformative names.
+- ใช้ตัวอักษรเล็กทั้งหมด ไม่มีตัวใหญ่ หรือขีดล่าง
+- ไม่เปลี่ยนชื่อมันตอนที่ผู้ใช้ import มันเข้าไป
+- สั้นและกระชับ เพราะมันจะถูกอ้างถึงในทุกที่จะมาเรียกใช้
+- ไม่ต้องทำเป็นพหูพจน์
+- อย่าตั้งชื่อ "common", "util", "shared" ชื่อพวกนี้มันห่วย และไม่ได้ช่วยให้เรารู้อะไรเลย
 
-See also [Package Names] and [Style guideline for Go packages].
+ดูเพิ่มเติมได้ที่ [Package Names] และ [Style guideline for Go packages]
 
   [Package Names]: https://blog.golang.org/package-names
   [Style guideline for Go packages]: https://rakyll.org/style-packages/
 
-### Function Names
+### การตั้งชื่อฟังก์ชั่น
 
-We follow the Go community's convention of using [MixedCaps for function
-names]. An exception is made for test functions, which may contain underscores
-for the purpose of grouping related test cases, e.g.,
+เราทำแบบเดียวกับที่ชุมชนคนเขียน go ทำกันด้วยการใช้ [MixedCaps for function
+names] (การผสมตัวอักษรเล็กและใหญ่) ยกเว้นเฉพาะเวลาเขียนเทส สามารถใช้ขีดล่างได้ เพื่อจัดกลุ่มการทดสอบที่สัมพันธ์กัน ตัวอย่างเช่น
 `TestMyFunction_WhatIsBeingTested`.
 
   [MixedCaps for function names]: https://golang.org/doc/effective_go.html#mixed-caps
 
 ### Import Aliasing
 
-Import aliasing must be used if the package name does not match the last
-element of the import path.
+การตั้งชื่อแฝงให้แพ็คเก็จที่ import ทำเมื่อชื่อแพ็คเก็จที่นำเข้ามาไม่ตรงกับส่วนสุดท้ายของพาร์ท
 
 ```go
 import (
@@ -1276,8 +1267,7 @@ import (
 )
 ```
 
-In all other scenarios, import aliases should be avoided unless there is a
-direct conflict between imports.
+ในกรณีอื่นๆ การตั้งชื่อแฝงให้การ import ไม่ควรทำ เว้นเสียแต่ว่ามันจะไปซ้ำกันกับแพ็คเก็จอื่น
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1311,17 +1301,14 @@ import (
 
 ### Function Grouping and Ordering
 
-- Functions should be sorted in rough call order.
-- Functions in a file should be grouped by receiver.
+- ควรเรียงฟังก์ชั่นตามลำดับการเรียกใช้
+- ฟังก์ชั่นในไฟล์ควรจัดกลุ่มตาม receiver
 
-Therefore, exported functions should appear first in a file, after
-`struct`, `const`, `var` definitions.
+ฟังก์ชั่นที่เปิดเผยไปข้างนอกควรอยู่ในส่วนแรกๆของไฟล์ หลังการประกาศ `struct`, `const`, `var`
 
-A `newXYZ()`/`NewXYZ()` may appear after the type is defined, but before the
-rest of the methods on the receiver.
+ฟังก์ชั่นแบบนี้ `newXYZ()`/`NewXYZ()` ควรอยู่หลังการประกาศ type แต่อยู่ก่อนเมธอดที่ใช้ type นี้เป็นตัว receiver
 
-Since functions are grouped by receiver, plain utility functions should appear
-towards the end of the file.
+พอฟังก์ชั่นถูกจัดกลุ่มแบบนี้ พวกฟังก์ชั่นที่ใช้งานทั่วไปก็ควรไปอยู่ส่วนท้ายๆของไฟล์
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1367,9 +1354,7 @@ func calcCost(n []int) int {...}
 
 ### Reduce Nesting
 
-Code should reduce nesting where possible by handling error cases/special
-conditions first and returning early or continuing the loop. Reduce the amount
-of code that is nested multiple levels.
+โค้ดควรลดความยุ่งเหยิงด้วยการจัดการ error ก่อนแล้วรีเทิร์นออกไป หรือไปเริ่มต้นลูปใหม่ ให้เร็วที่สุด เพื่อลดโค้ดที่ซ้อนกันหลายๆชั้น
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1413,8 +1398,7 @@ for _, v := range data {
 
 ### Unnecessary Else
 
-If a variable is set in both branches of an if, it can be replaced with a
-single if.
+ถ้าตัวแปรจะถูกกำหนดค่าทั้งใน if และ else มันควรจะเหลือแค่ if ก็ได้
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1444,8 +1428,7 @@ if b {
 
 ### Top-level Variable Declarations
 
-At the top level, use the standard `var` keyword. Do not specify the type,
-unless it is not the same type as the expression.
+การใช้คียเวิร์ด `var` ไม่ต้องบอก type ก็ได้ เว้นเสียแต่ว่ามันจะคืน type ไม่ตรงกับที่ต้องการ
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1471,8 +1454,7 @@ func F() string { return "A" }
 </td></tr>
 </tbody></table>
 
-Specify the type if the type of the expression does not match the desired type
-exactly.
+ระบุ type ถ้า type ที่ได้รับมาไม่ตรงกับที่อยากได้
 
 ```go
 type myError struct{}
@@ -1487,14 +1469,11 @@ var _e error = F()
 
 ### Prefix Unexported Globals with _
 
-Prefix unexported top-level `var`s and `const`s with `_` to make it clear when
-they are used that they are global symbols.
+ตั้งชื่อขึ้นต้นด้วย ขีดล่าง เวลาประกาศด้วย `var`s และ `const`s ให้ตัวแปรที่ไม่เปิดเผยสู่ภายนอก เพื่อทำให้ชัดเจว่ามันถูกใช้เป็น global อยู่ภายในแพ็คเก็จ
 
-Exception: Unexported error values, which should be prefixed with `err`.
+ข้อยกเว้น: ตัวแปร error ที่ไม่เปิดเผยสู่ภายนอก ควรตั้งขื่อขึ้นต้นด้วย `err`
 
-Rationale: Top-level variables and constants have a package scope. Using a
-generic name makes it easy to accidentally use the wrong value in a different
-file.
+หลักการและเหตุผล: ตัวแปรที่ประกาศไว้ตั้งแต่ต้น และพวก constants มีขอบเขตในแพ็คเก็จ เพราะฉะนั้น การตั้งชื่อแบบกลางๆ มันจะทำให้เกิดเรื่องไม่คาดคิดได้ ทำให้ได้ค่าผิดในไฟล์อื่นได้ง่ายมาก
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1537,9 +1516,7 @@ const (
 
 ### Embedding in Structs
 
-Embedded types (such as mutexes) should be at the top of the field list of a
-struct, and there must be an empty line separating embedded fields from regular
-fields.
+type ที่ถูกฝังไว้ (เช่น mutexes) ควรอยู่บนสุดของรายการใน struct และควรเว้นบรรทัดว่างๆไว้สักบรรทัด
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1568,8 +1545,7 @@ type Client struct {
 
 ### Use Field Names to Initialize Structs
 
-You should almost always specify field names when initializing structs. This is
-now enforced by [`go vet`].
+คุณควรระบุชื่อฟิลด์เสมอเมื่อประกาศตัวแปรจาก struct ซึ่งตอนนี้เวลานี้ถูกบังคับโดย [`go vet`] เรียบร้อยแล้ว
 
   [`go vet`]: https://golang.org/cmd/vet/
 
@@ -1595,8 +1571,7 @@ k := User{
 </td></tr>
 </tbody></table>
 
-Exception: Field names *may* be omitted in test tables when there are 3 or
-fewer fields.
+ข้อยกเว้น: ชื่อฟิลด์ *อาจจะ* ละไว้ได้ในตารางการทดสอบถ้ามันมี 3 ฟิลด์หรือน้อยกว่า
 
 ```go
 tests := []struct{
@@ -1610,8 +1585,7 @@ tests := []struct{
 
 ### Local Variable Declarations
 
-Short variable declarations (`:=`) should be used if a variable is being set to
-some value explicitly.
+การประกาศตัวแปรแบบสั้น (`:=`) ควรถูกใช้เมื่อต้องการกำหนดค่าให้ตัวแปรอยู่แล้ว
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1631,8 +1605,7 @@ s := "foo"
 </td></tr>
 </tbody></table>
 
-However, there are cases where the default value is clearer when the `var`
-keyword is use. [Declaring Empty Slices], for example.
+อย่างไรก็ดี บางกรณีการปล่อยให้มันเป็นค่าเริ่มต้นก็อาจจะชัดเจนกว่า ด้วยการใช้คีย์เวิร์ด `var` [Declaring Empty Slices] ตัวอย่างเช่น
 
   [Declaring Empty Slices]: https://github.com/golang/go/wiki/CodeReviewComments#declaring-empty-slices
 
@@ -1670,10 +1643,9 @@ func f(list []int) {
 
 ### nil is a valid slice
 
-`nil` is a valid slice of length 0. This means that,
+`nil` เป็นค่าที่เหมาะสมที่จะใช้แทน slice ขนาด 0 หมายความว่า
 
-- You should not return a slice of length zero explicitly. Return `nil`
-  instead.
+- คุณไม่ควรคืน slice ที่มีขนาดเท่ากับศูนย์ออกไปตรงๆ แต่ให้คืน `nil` ออกไปแทน
 
   <table>
   <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1697,8 +1669,7 @@ func f(list []int) {
   </td></tr>
   </tbody></table>
 
-- To check if a slice is empty, always use `len(s) == 0`. Do not check for
-  `nil`.
+- การตรวจสอบว่า slice นั้นว่างเปล่าหรือไม่ ให้ใช้ `len(s) == 0` อย่าไปตรวจสอบ `nil`
 
   <table>
   <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1722,8 +1693,7 @@ func f(list []int) {
   </td></tr>
   </tbody></table>
 
-- The zero value (a slice declared with `var`) is usable immediately without
-  `make()`.
+- zero value (slice ที่ประกาศด้วย `var`) สามารถใช้งานได้เลย โดยไม่ต้อง `make()` ก่อน
 
   <table>
   <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1762,8 +1732,7 @@ func f(list []int) {
 
 ### Reduce Scope of Variables
 
-Where possible, reduce scope of variables. Do not reduce the scope if it
-conflicts with [Reduce Nesting](#reduce-nesting).
+ถ้ามีโอกาสลดขอบเขตของตัวแปรก็ควรทำ แต่อย่าไปลดมันถ้ามันขัดแย้งกับ [Reduce Nesting](#reduce-nesting)
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1788,8 +1757,7 @@ if err := ioutil.WriteFile(name, data, 0644); err != nil {
 </td></tr>
 </tbody></table>
 
-If you need a result of a function call outside of the if, then you should not
-try to reduce the scope.
+ถ้าคุณต้องการผลลัพธ์ของฟังก์ชั่นไปใช้หลัง if ต่อ งั้นคุณก็ไม่ควรลดขอบเขตมัน
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1831,8 +1799,7 @@ return nil
 
 ### Avoid Naked Parameters
 
-Naked parameters in function calls can hurt readability. Add C-style comments
-(`/* ... */`) for parameter names when their meaning is not obvious.
+พารามิเตอร์เปลือยๆที่ใส่ไปตอนที่เรียกฟังก์ชั่น มันอ่านยาก ให้เพิ่มคอมเม้นท์แบบ C-style ลงไป (`/* ... */`) ให้ความหมายชัดเจนขึ้น
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1856,9 +1823,7 @@ printInfo("foo", true /* isLocal */, true /* done */)
 </td></tr>
 </tbody></table>
 
-Better yet, replace naked `bool` types with custom types for more readable and
-type-safe code. This allows more than just two states (true/false) for that
-parameter in the future.
+แต่มันก็ยังไม่ดีที่สุด เราควรแทนที่ type `bool` ที่เปลือยๆอยู่นี้ด้วยการสร้าง type ขึ้นมาให้มันอ่านง่ายขึ้น และยังรองรับหากในอนาคตต้องการมีมากกว่าสองสถานะ (true/false)
 
 ```go
 type Region int
@@ -1881,9 +1846,7 @@ func printInfo(name string, region Region, status Status)
 
 ### Use Raw String Literals to Avoid Escaping
 
-Go supports [raw string literals](https://golang.org/ref/spec#raw_string_lit),
-which can span multiple lines and include quotes. Use these to avoid
-hand-escaped strings which are much harder to read.
+Go สนับสนุน [raw string literals](https://golang.org/ref/spec#raw_string_lit) ซึ่งสามารถใส่ได้หลายบรรทัดรวมทั้งเครื่องหมายคำพูดได้ด้วย ซึ่งการใช้แบบนี้เพื่อป้องกันการทำ hand-escaped เพราะมันจะทำให้อ่านยาก
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1905,8 +1868,7 @@ wantError := `unknown error:"test"`
 
 ### Initializing Struct References
 
-Use `&T{}` instead of `new(T)` when initializing struct references so that it
-is consistent with the struct initialization.
+ใช้ `&T{}` แทนการใช้ `new(T)` เมื่อต้องการสร้างตัวแปรแบบอ้างอิงจาก struct จะดูดีกว่า
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1934,10 +1896,7 @@ sptr := &T{Name: "bar"}
 
 ### Initializing Maps
 
-Prefer `make(..)` for empty maps, and maps populated
-programmatically. This makes map initialization visually
-distinct from declaration, and it makes it easy to add size
-hints later if available.
+เสนอให้ใช้ `make(..)` เพื่อสร้าง maps ว่างๆ และเอาไปเขียนโปรแกรมต่อได้ ซึ่งมันทำการประกาศตัวแปรให้พร้อมใช้งานดูมีความต่างจากการประกาศเฉยๆ และมันยังทำให้ง่ายต่อการเพิ่มการใบ้ขนาดให้ในภายหลังด้วย
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -1967,22 +1926,18 @@ var (
 </td></tr>
 <tr><td>
 
-Declaration and initialization are visually similar.
+การประกาศให้พร้อมใช้งาน กับการประกาศแล้วยังไม่พร้อมใช้งาน ดูคล้ายๆกัน
 
 </td><td>
 
-Declaration and initialization are visually distinct.
+การประกาศให้พร้อมใช้งาน กับการประกาศแล้วยังไม่พร้อมใช้งาน ดูแตกต่างกัน
 
 </td></tr>
 </tbody></table>
 
-Where possible, provide capacity hints when initializing
-maps with `make()`. See
-[Prefer Specifying Map Capacity Hints](#prefer-specifying-map-capacity-hints)
-for more information.
+ถ้าทำได้ ก็ให้ใบ้ความจุตอนที่ประกาศ maps ด้วยคำสั่ง `make()` ลองดูที่ [Prefer Specifying Map Capacity Hints](#prefer-specifying-map-capacity-hints) สำหรับข้อมูลเพิ่มเติม
 
-On the other hand, if the map holds a fixed list of elements,
-use map literals to initialize the map.
+หรือในทางกลับกัน ถ้า map นั้นจะต้องเก็บค่าที่แน่นอน ก็ให้ใช้การประกาศด้วยปีกกาได้เลย
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -2009,17 +1964,13 @@ m := map[T1]T2{
 </td></tr>
 </tbody></table>
 
-
-The basic rule of thumb is to use map literals when adding a fixed set of
-elements at initialization time, otherwise use `make` (and specify a size hint
-if available).
+กฎพื้นฐานของนิ้วหัวแม่มือก็คือ ใช้ปีกกาประกาศเมื่อต้องใส่ค่าคงที่ลงไปตั้งแต่ต้น ไม่เช่นนั้นก็ใช้ `make` (และใส่การใบ้ความจุถ้าทำได้)
 
 ### Format Strings outside Printf
 
-If you declare format strings for `Printf`-style functions outside a string
-literal, make them `const` values.
+ถ้าคุณประกาศการจัดรูปแบบสตริงสำหรับใช้กับฟังก์ชั่น `Printf`-style ให้ทำเป็น `const`
 
-This helps `go vet` perform static analysis of the format string.
+มันจะช่วยให้ `go vet` ได้วิเคราะห์การจัดรูปแบบให้
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -2043,18 +1994,13 @@ fmt.Printf(msg, 1, 2)
 
 ### Naming Printf-style Functions
 
-When you declare a `Printf`-style function, make sure that `go vet` can detect
-it and check the format string.
+เมื่อคุณประกาศฟังก์ชั่น `Printf`-style ช่วยทำให้มั่นใจว่า `go vet` จะสามารถตรวจเจอมันและจะได้ตรวจสอบรูปแบบสตริงได้
 
-This means that you should use pre-defined `Printf`-style function
-names if possible. `go vet` will check these by default. See [Printf family]
-for more information.
+หมายความว่า คุณควรใช้ชื่อที่ตั้งเผื่อไว้แล้วตามสไตล์ `Printf` ถ้าทำได้ `go vet` จะได้ตรวจสอบได้เอง ดูรายละเอียดเพิ่มเติมได้ที่ [Printf family]
 
   [Printf family]: https://golang.org/cmd/vet/#hdr-Printf_family
 
-If using the pre-defined names is not an option, end the name you choose with
-f: `Wrapf`, not `Wrap`. `go vet` can be asked to check specific `Printf`-style
-names but they must end with f.
+ถ้าการใช้ชื่อที่ตั้งเผื่อไว้ ไม่ใช่ทางเลือกของคุณ งั้นก็ให้ตั้งชื่อลงท้ายด้วย f: เช่น `Wrapf` ไม่ใช่ `Wrap` เฉยๆ โดยสามารถบอกให้ `go vet` ตรวจสอบฟังก์ชั่นสไตล์ `Printf` ได้ แต่มันจะต้องลงท้ายด้วยตัว f เท่านั้น
 
 ```shell
 $ go vet -printfuncs=wrapf,statusf
@@ -2068,8 +2014,7 @@ See also [go vet: Printf family check].
 
 ### Test Tables
 
-Use table-driven tests with [subtests] to avoid duplicating code when the core
-test logic is repetitive.
+ใช้การทดสอบที่ขับเคลื่อนด้วยตาราง ด้วย [subtests] เพื่อหลีกเลี่ยงการเขียนโค้ดซ้ำๆ เวลาที่เราเทสด้วยลอจิกแบบเดิมหลายๆครั้ง
 
   [subtests]: https://blog.golang.org/subtests
 
@@ -2147,12 +2092,9 @@ for _, tt := range tests {
 </td></tr>
 </tbody></table>
 
-Test tables make it easier to add context to error messages, reduce duplicate
-logic, and add new test cases.
+ตารางการทดสอบมันจะง่ายเวลาที่จะเพิ่มบริบทให้ข้อความ error แล้วยังลดโค้ดซ้ำๆ และเพิ่ม test cases ง่าย
 
-We follow the convention that the slice of structs is referred to as `tests`
-and each test case `tt`. Further, we encourage explicating the input and output
-values for each test case with `give` and `want` prefixes.
+เราปฏิบัติตามประเพณีนิยมด้วยการใช้ slice ของ struct แล้วตั้งชื่อว่า `tests` และแต่ละ test case ให้ชื่อ `tt` และระบุชื่อให้ input และ output ในแต่ละ test case ด้วยการตั้งชื่อขึ้นต้นว่า `give` และ `want`
 
 ```go
 tests := []struct{
@@ -2170,14 +2112,9 @@ for _, tt := range tests {
 
 ### Functional Options
 
-Functional options is a pattern in which you declare an opaque `Option` type
-that records information in some internal struct. You accept a variadic number
-of these options and act upon the full information recorded by the options on
-the internal struct.
+Functional options เป็นรูปแบบที่ใช้ประกาศ type `Option` เพื่อบันทึกข้อมูลลงไปใน struct ภายใน จากนั้นให้รับตัวแปรแบบ varidic เข้ามาเป็นตัวเลือก และจัดการตามข้อมูลที่บันทึกไว้ใน options ที่เป็น struct ภายใน
 
-Use this pattern for optional arguments in constructors and other public APIs
-that you foresee needing to expand, especially if you already have three or
-more arguments on those functions.
+ใช้รูปแบบนี้สำหรับอาร์กิวเม้นต์ที่เป็นตัวเลือกและ APIs สาธารณะอื่นๆที่คุณคาดเดาได้ว่าจะต้องถูกขยาย โดยเฉพาะอย่างยิ่งถ้าคุณมีอาร์กิวเม้นต์ 3ตัว หรือมากกว่าอยู่แล้ว
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
