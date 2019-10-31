@@ -392,7 +392,7 @@ snapshot := stats.Snapshot()
 
 ### Defer to Clean Up
 
-ใช้ defer เพื่อทำความสะอาดพวกทรัพยากรณ์ต่างๆเช่น ไฟล์ และ การล็อคต่างๆ
+ใช้ defer เพื่อ คืน resource หรือทรัพยากร ที่จองหรือนำไปใช้งานต่างๆเช่น ไฟล์ และ อะไรที่ถูกล็อคไว้
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
