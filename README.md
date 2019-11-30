@@ -131,8 +131,6 @@ interface ประกอบไปด้วยสองสิ่ง:
 
 1. พอยเตอร์ ชี้ไปที่ type ของสิ่งที่เก็บ คุณจะคิดซะว่ามันเป็น "type" เลยก็ได้
 2. พอยเตอร์ ของสิ่งที่เก็บ ถ้าสิ่งนั้นเป็นพอยเตอร์ ก็จะเก็บตรงๆ แต่ถ้ามันเป็นค่าใดๆก็ตาม มันจะเก็บเป็นพอยเตอร์ของค่านั้นแทน
-You almost never need a pointer to an interface. You should be passing
-interfaces as values—the underlying data can still be a pointer.
 
 ถ้าคุณต้องการให้เมธอดแก้ไขค่าในตัวมันเองได้ด้วย นั่นคุณถึงจะต้องใช้พอยเตอร์
 
