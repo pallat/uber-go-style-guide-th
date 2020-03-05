@@ -155,7 +155,7 @@ func (s *S) Write(str string) {
 
 sVals := map[int]S{1: {"A"}}
 
-// คุณอเรียกใช้ Read ได้อย่างเดียว
+// คุณเรียกใช้ Read ได้อย่างเดียว
 sVals[1].Read()
 
 // This will not compile:
